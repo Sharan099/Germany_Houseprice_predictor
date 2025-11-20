@@ -1,0 +1,11 @@
+# Ignore all zip files
+*.zip
+
+# Ignore large datasets
+*.csv
+*.tar
+*.mp4
+
+# Ignore any folder named 'data' or 'large_files'
+data/
+large_files/
