@@ -1,47 +1,39 @@
-🏠 Germany Base Rent Prediction Project
-Overview
+# 🏠 Germany Base Rent Prediction Project
 
-This project predicts the base rent of residential properties in Germany using machine learning. It is built with CatBoost, and the workflow includes preprocessing, feature engineering, hyperparameter tuning, evaluation, and deployment-ready scripts with Streamlit.
+## Overview
+This project predicts the **base rent of residential properties in Germany** using machine learning. It is built with **CatBoost**, and the workflow includes preprocessing, feature engineering, hyperparameter tuning, evaluation, and deployment-ready scripts with **Streamlit**.
 
-The project is structured to allow end-to-end model development: data preprocessing → model training → hyperparameter tuning → evaluation → deployment.
+The project is structured to allow **end-to-end model development**:  
+data preprocessing → model training → hyperparameter tuning → evaluation → deployment.
 
-Features
+---
 
-Preprocessing and cleaning of real estate dataset
+## Features
 
-Feature engineering:
+- Preprocessing and cleaning of real estate dataset
+- Feature engineering:
+  - `propertyAge` (derived from construction year)
+  - `livingSpaceRange` (categorical bins for living space)
+- Handling missing values, outliers, and high-cardinality categorical variables
+- Encoding:
+  - One-hot encoding for low-cardinality features (`regio1`, `condition`, `interiorQual`)
+  - Ordinal encoding for high-cardinality features (`regio2`, `regio3`)
+- Scaling numeric features
+- Model:
+  - **CatBoost Regressor** for robust performance with categorical features
+  - Hyperparameter tuning via `RandomizedSearchCV`
+- Model evaluation metrics:
+  - MAE, RMSE, R², MAPE
+  - Cross-validation (5-fold)
+- Feature importance visualization
+- Deployment-ready Streamlit app
 
-propertyAge (derived from construction year)
+---
 
-livingSpaceRange (categorical bins for living space)
+## Project Structure
 
-Handling missing values, outliers, and high-cardinality categorical variables
+```
 
-Encoding:
-
-One-hot encoding for low-cardinality features (regio1, condition, interiorQual)
-
-Ordinal encoding for high-cardinality features (regio2, regio3)
-
-Scaling numeric features
-
-Model:
-
-CatBoost Regressor for robust performance with categorical features
-
-Hyperparameter tuning via RandomizedSearchCV
-
-Model evaluation metrics:
-
-MAE, RMSE, R², MAPE
-
-Cross-validation (5-fold)
-
-Feature importance visualization
-
-Deployment-ready Streamlit app
-
-Project Structure
 Classical_ML/
 │
 ├── Data/
@@ -56,105 +48,102 @@ Classical_ML/
 ├── train_columns.pkl          # Training feature column order
 └── README.md                  # Project documentation
 
-Setup Instructions
+````
 
-Clone the repository:
+---
 
-git clone <repo_url>
-cd Classical_ML
+## Setup Instructions
 
+1. Clone the repository:
+   ```bash
+   git clone <repo_url>
+   cd Classical_ML
+````
 
-Create and activate a Python virtual environment:
+2. Create and activate a Python virtual environment:
 
-python -m venv venv
-source venv/bin/activate       # Linux/Mac
-venv\Scripts\activate          # Windows
+   ```bash
+   python -m venv venv
+   # Linux/Mac
+   source venv/bin/activate
+   # Windows
+   venv\Scripts\activate
+   ```
 
+3. Install dependencies:
 
-Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-pip install -r requirements.txt
+4. Ensure the dataset (`immo_data.csv`) is in the `Data` folder.
 
+---
 
-Ensure the dataset (immo_data.csv) is in the Data folder.
+## Usage
 
-Usage
-1. Model Evaluation & Hyperparameter Tuning
+### 1. Model Evaluation & Hyperparameter Tuning
+
+```bash
 python evaluate_model.py
+```
 
+* Evaluates the baseline model
+* Performs **RandomizedSearchCV** hyperparameter tuning
+* Saves the best model as `best_model_tuned.pkl`
+* Displays feature importance and evaluation metrics
 
-Evaluates baseline model
+### 2. Streamlit Deployment
 
-Performs RandomizedSearchCV hyperparameter tuning
-
-Saves the best model as best_model_tuned.pkl
-
-Displays feature importance and metrics
-
-2. Streamlit Deployment
+```bash
 streamlit run app.py
+```
 
+* User-friendly web interface for property rent prediction
+* Input property features and get predicted base rent
+* Supports all preprocessing and feature alignment from training
 
-User-friendly web interface for property rent prediction
+---
 
-Input property features and get predicted base rent
+## Evaluation Metrics
 
-Supports all preprocessing and feature alignment from training
-
-Evaluation Metrics
-
-MAE (Mean Absolute Error)
-
-RMSE (Root Mean Squared Error)
-
-R² (Coefficient of Determination)
-
-MAPE (Mean Absolute Percentage Error)
-
-Cross-validation RMSE
+* **MAE** – Mean Absolute Error
+* **RMSE** – Root Mean Squared Error
+* **R²** – Coefficient of Determination
+* **MAPE** – Mean Absolute Percentage Error
+* **Cross-validation RMSE** – from 5-fold CV
 
 Metrics are printed for both baseline and tuned models.
 
-Dependencies
+---
 
-Python >= 3.8
+## Dependencies
 
-pandas
-
-numpy
-
-scikit-learn
-
-catboost
-
-matplotlib
-
-seaborn
-
-joblib
-
-pickle
-
-streamlit
+* Python >= 3.8
+* pandas
+* numpy
+* scikit-learn
+* catboost
+* matplotlib
+* seaborn
+* joblib
+* pickle
+* streamlit
 
 Install all dependencies using:
 
+```bash
 pip install pandas numpy scikit-learn catboost matplotlib seaborn joblib streamlit
+```
 
-Notes
+---
 
-Ensure train_columns.pkl, encoder.pkl, and scaler.pkl are loaded for deployment to match feature preprocessing exactly as in training.
+## Notes
 
-Tuned model best_model_tuned.pkl generally provides better predictions than baseline.
+* Ensure `train_columns.pkl`, `encoder.pkl`, and `scaler.pkl` are loaded for deployment to match feature preprocessing exactly as in training.
+* Tuned model (`best_model_tuned.pkl`) generally provides better predictions than baseline.
+* Designed for German residential rental data; may need adjustment for other countries or datasets.
 
-Designed for German residential rental data; may need adjustment for other countries or datasets.
+---
 
-Future Improvements
-
-Hyperparameter tuning with Optuna or Bayesian Optimization
-
-SHAP feature importance for better model explainability
-
-Deployment with Docker or FastAPI for production-grade service
-
-MLflow integration for experiment tracking
+```
